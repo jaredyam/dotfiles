@@ -1,0 +1,62 @@
+[user]
+	name = jaredyam
+	email = jihonren@gmail.com
+
+[color]
+	ui = true
+
+[credential]
+	helper = osxkeychain
+
+[core]
+	excludesfile = /Users/joeyam/.gitignore
+	editor = subl -n -w
+    pager = delta --dark
+
+[alias]
+    # log
+    lg = log --date=short --format='%w(72,0,8)%C(auto)%h %C(green)%cd %<(20,trunc)%aN%C(auto)%d%n%w(72,8,8)%s'
+    ls = log --pretty='%Cred%h%Creset | %C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %C(cyan)[%an]%Creset' --graph --all
+
+    # Remove merged branches
+    clear = "!git branch — merged | grep -v ‘*’ | xargs -n 1 git branch -d"
+
+    # Add files to a previous commit
+    commend = commit --amend --no-edit
+
+    # Track your personal commits
+    since = !sh -c \"git ls --all --author=$USER --since='$1'\" -
+
+    # Create a .zip of your repo
+    export = !sh -c \"git archive --format zip HEAD > $1.zip\" -
+    wdiff = diff --color-words --ignore-all-space
+    ldiff = difftool -y -t latex
+    # [difftool.latex]
+    #     cmd = latexdiff "$LOCAL" "$REMOTE
+
+    # Navigate to branches using FZF
+    cof = "!checkout_fzf() { git branch | fzf | xargs git checkout; }; checkout_fzf"
+    # Add files using FZF
+    af = "!add_fzf() { git status -s | awk '{print $2}' | fzf -m | xargs git add; }; add_fzf"
+    # Add files using FZF and immediately commit them
+    afmend = "!add_fzf_amend() { git status -s | awk '{print $2}' | fzf -m | xargs git add && git amend; }; add_fzf_amend"
+    # Restore files (like removing multiple files from the staging area)
+    ref =  "!restore_fzf() { git status -s | awk '{print $2}' | fzf -m | xargs git restore; }; restore_fzf"
+    # Delete untracked files using FZF
+    rmf = "!delete_untracked() { git ls-files --exclude-standard --other | fzf -m | xargs rm; }; delete_untracked"
+
+[pager]
+    diff = delta
+    log = delta
+    reflog = delta
+    show = delta
+
+[delta]
+    plus-style = "syntax #012800"
+    minus-style = "syntax #340001"
+    syntax-theme = Monokai Extended
+    navigate = true
+
+[interactive]
+    diffFilter = delta --color-only
+
