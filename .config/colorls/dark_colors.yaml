@@ -1,0 +1,50 @@
+# Main Colors
+unrecognized_file: greenyellow
+recognized_file:   azure
+dir:               powderblue
+
+# Custom file types
+py:        green
+md:        pink
+pdf:       indianred
+
+# Link
+dead_link: red
+link:      cyan
+
+# special files
+socket:    orange
+blockdev:  orange
+chardev:   orange
+
+# Access Modes
+write:     darkkhaki
+read:      limegreen
+exec:      red
+no_access: indianred
+
+# Age
+day_old:     mediumspringgreen
+hour_old:    lime
+no_modifier: seagreen
+
+# File Size
+file_large:  orange
+file_medium: gold
+file_small:  peachpuff
+
+# Random
+report: white
+user:   moccasin
+tree:   powderblue
+empty:  yellow
+error:  red
+normal: darkkhaki
+
+# Git
+addition:     chartreuse
+modification: darkkhaki
+deletion:     darkred
+untracked:    mediumvioletred
+unchanged:    forestgreen
+
