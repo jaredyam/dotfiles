@@ -99,20 +99,13 @@ call plug#begin("~/.vim/plugged")
   " let g:deoplete#enable_at_startup = 1
 call plug#end()
 
-" For Neovim 0.1.3 and 0.1.4 - https://github.com/neovim/neovim/pull/2198
-if (has('nvim'))
-  let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
-endif
-
 " Enable theming support
 if (has("termguicolors"))
  set termguicolors
 endif
 
-
 " open new split panes to right and below
-set splitright
-set splitbelow
+set splitright splitbelow
 " turn terminal to normal mode with escape
 tnoremap <Esc> <C-\><C-n>
 " start terminal in insert mode
@@ -135,14 +128,10 @@ nnoremap <A-l> <C-w>l
 " Automatically update on change
 " autocmd TextChanged,TextChangedI <buffer> silent update
 
-" Style preferences
-set tabstop=2 shiftwidth=2 expandtab number relativenumber
-
 " Spell check
-set spelllang=en_gb
+set spelllang=en_us
 " Automatically enable spell check in the given file types
 autocmd FileType latex,tex,md,markdown setlocal spell
-set spelllang=en_us
 " Automatically compile markdown files
 autocmd BufWritePost *.md silent execute "!pandoc % -o %:r.pdf"
 command PandocPDF silent execute "!pandoc % -o %:r.pdf"
@@ -151,46 +140,9 @@ map <F6> :PandocPDF<CR>
 command Zathura execute "!zathura %:r.pdf&"
 map <F5> :Zathura<CR>
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Text, tab and indent related
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Use spaces instead of tabs
-set expandtab
-
-" Be smart when using tabs ;)
-set smarttab
-
-" 1 tab == 4 spaces
-set shiftwidth=4
-set tabstop=4
-
-" Linebreak on 500 characters
-set lbr
-set tw=500
-
-set ai "Auto indent
-set si "Smart indent
-set wrap "Wrap lines
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Colors and Fonts
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Enable syntax highlighting
-syntax enable
-
 " Enable 256 colors palette in Gnome Terminal
 if $COLORTERM == 'gnome-terminal'
     set t_Co=256
-endif
-
-set background=dark
-
-" Set extra options when running in GUI mode
-if has("gui_running")
-    set guioptions-=T
-    set guioptions-=e
-    set t_Co=256
-    set guitablabel=%M\ %t
 endif
 
 " Set utf8 as standard encoding and en_US as the standard language
@@ -199,11 +151,23 @@ set encoding=utf8
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
 
+" Enable syntax highlighting
 syntax on
+" Style preferences
 set modeline
+" Use spaces instead of tabs
 set expandtab
+" Be smart when using tabs ;)
+set smarttab
+set ai "Auto indent
+set si "Smart indent
+set wrap "Wrap lines
+" 1 tab == 4 spaces
 set tabstop=4
 set shiftwidth=4
+" Linebreak on 500 characters
+set lbr
+set tw=500
 set exrc " .vimrc in local project dir
 set secure
 autocmd BufRead,BufNewFile * set signcolumn=yes
@@ -222,13 +186,6 @@ set diffopt+=vertical
 " For Neovim 0.1.3 and 0.1.4 - https://github.com/neovim/neovim/pull/2198
 if (has('nvim'))
   let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
-endif
-
-" For Neovim > 0.1.5 and Vim > patch 7.4.1799 - https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162
-" Based on Vim patch 7.4.1770 (`guicolors` option) - https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd
-" https://github.com/neovim/neovim/wiki/Following-HEAD#20160511
-if (has("termguicolors") && $TERM_PROGRAM ==# 'iTerm.app')
-  set termguicolors
 endif
 
 "-- THEMING --
