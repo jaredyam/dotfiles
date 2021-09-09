@@ -2,3 +2,17 @@ git:
   paging:
     colorArg: always
     pager: delta --dark --paging=never
+
+gui:
+  theme:
+    activeBorderColor:
+      - '#F59E73'
+      - bold
+    inactiveBorderColor:
+      - '#BFABDE'
+    optionsTextColor:
+      - '#AEEEFC'
+    selectedLineBgColor:
+      - default
+    selectedRangeBgColor:
+      - '#CEDF8F'
