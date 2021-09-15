@@ -6,13 +6,13 @@ git:
 gui:
   theme:
     activeBorderColor:
-      - '#F59E73'
+      - '#F79A16'
       - bold
     inactiveBorderColor:
-      - '#BFABDE'
+      - '#81B56B'
     optionsTextColor:
       - '#AEEEFC'
     selectedLineBgColor:
       - default
     selectedRangeBgColor:
-      - '#CEDF8F'
+      - reverse
