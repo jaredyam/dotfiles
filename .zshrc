@@ -453,7 +453,7 @@ alias code='code-insiders'
 alias typora='open -a typora'
 
 alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-alias lazydotfiles='lazygit --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias dotfiles-lazy='lazygit --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 export PATH="/usr/local/sbin:$PATH"
 # git latex diff
