@@ -99,11 +99,6 @@ call plug#begin("~/.vim/plugged")
   " let g:deoplete#enable_at_startup = 1
 call plug#end()
 
-" Enable theming support
-if (has("termguicolors"))
- set termguicolors
-endif
-
 " open new split panes to right and below
 set splitright splitbelow
 " turn terminal to normal mode with escape
