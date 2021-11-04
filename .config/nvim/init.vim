@@ -268,3 +268,6 @@ command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, '--color-path "1;36"', fzf#
 inoremap <Leader>s <ESC>:Snippets<CR>i
 inoremap jj <Esc>
 inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
+
+" To use fzf in Vim, add the following line to your .vimrc:
+set rtp+='/usr/local/opt/fzf'
