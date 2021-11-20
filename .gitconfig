@@ -50,13 +50,18 @@
     log = delta
     reflog = delta
     show = delta
+    blame = delta
 
 [delta]
-    plus-style = "syntax #012800"
-    minus-style = "syntax #340001"
+    plus-style = "syntax #336600"
+    minus-style = "syntax #340000"
     syntax-theme = Monokai Extended
     navigate = true
+    line-numbers = true
+    inspect-raw-lines = false
 
 [interactive]
-    diffFilter = delta --color-only
+    diffFilter = delta --color-only --features=interactive
 
+[diff]
+    colorMoved = default
