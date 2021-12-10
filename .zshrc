@@ -376,30 +376,32 @@ function rename-env() {
 }
 
 # install python dependencies with writing requirements.txt
-function pipin() {
+function pip-install() {
     for var in "$@"; do
-      pip install $var
-      if [ $? != 0 ]; then
-          echo "pip-install failed, switch to install $var with conda ..."
-          conda install -c conda-forge $var
-          if [ $? != 0 ]; then echo "Failed to install $var" && continue; fi
-      fi
-      pip freeze | grep -i "^$var=" >>${PYTHONPATH:-.}/requirements.txt
+      pip install "$var" && pip freeze | grep -i "^$var==" >>"${PYTHONPATH:-.}/requirements.txt"
     done
-
     awk -i inplace '!a[$0]++' ${PYTHONPATH:-.}/requirements.txt
 }
 
 # uninstall python packages with clearing the corresponding line in the requirements.txt
-function pipun() {
+function pip-uninstall() {
     for var in "$@"; do
       pip uninstall $var
-      if [ $? != 0 ]; then
-          echo "pip-uninstall failed, switch to uninstall $var with conda ..."
-          conda remove $var
-          if [ $? != 0 ]; then echo "Failed to uninstall $var" && continue; fi
-      fi
       gsed -i "/$var==./d" ${PYTHONPATH:-.}/requirements.txt
+    done
+}
+
+# write requirements needed for development
+function pip-install-dev() {
+    for var in "$@"; do
+      pip install "$var" && pip freeze | grep -i "^$var==" >>"${PYTHONPATH:-.}/requirements_dev.txt"
+    done
+    awk -i inplace '!a[$0]++' ${PYTHONPATH:-.}/requirements_dev.txt
+}
+function pip-uninstall-dev() {
+    for var in "$@"; do
+      pip uninstall $var
+      gsed -i "/$var==./d" ${PYTHONPATH:-.}/requirements_dev.txt
     done
 }
 
