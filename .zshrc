@@ -252,18 +252,19 @@ function rmf() {
 }
 
 # conda activate environment with fzf auto-prompting available envs
-function condaf-activate() {
+function conda-activate() {
   conda activate $(conda info --env | fzf | awk '{print $1}')
 }
+alias conda-deactivate='conda deactivate'
 
 # conda create environment with fzf auto-prompting available python versions
-function condaf-create-env() {
+function conda-create-env() {
   [ -z "$1" ] && echo "required <ENVNAME> argument" && return 1
   conda create -n "$1" "python=$(conda search python | fzf | awk '{print $2}')"
 }
 
 # conda remove environment with fzf auto-prompting available envs
-function condaf-remove-env() {
+function conda-remove-env() {
   conda remove -n $(conda info --env | fzf | awk '{print $1}') --all
 }
 
