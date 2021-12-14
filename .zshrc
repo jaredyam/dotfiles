@@ -259,8 +259,21 @@ alias conda-deactivate='conda deactivate'
 
 # conda create environment with fzf auto-prompting available python versions
 function conda-create-env() {
-  [ -z "$1" ] && echo "required <ENVNAME> argument" && return 1
-  conda create -n "$1" "python=$(conda search python | fzf | awk '{print $2}')"
+  local envname="$1"
+  local dirname=$(basename $PWD)
+  local response
+  [ -z "$envname" ] &&
+    read -k 1 "response?No environment name passed in, set it to the current directory name:"$'\n\t'"$dirname (y/[n])? " &&
+    echo &&
+    case "$response" in
+    y | Y | $'\n') envname="$dirname" ;;
+    n | N) read "envname?Please enter a name for the new environment: " ;;
+    *) echo "Invalid option given." && return 1 ;;
+    esac
+  conda create -n "$envname" "python=$(conda search python | fzf | awk '{print $2}')"
+  [ $(conda env list | grep "$envname" | awk '{print $1}') = "$envname" ] &&
+    conda activate "$envname" &&
+    echo "Successfully activated environment: $envname"
 }
 
 # conda remove environment with fzf auto-prompting available envs
