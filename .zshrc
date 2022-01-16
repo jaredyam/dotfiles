@@ -342,9 +342,14 @@ function gist() {
     git clone "$__url" && mv "${__url##*/}" "${1%.*}" && rm "$1" && cd "${1%.*}"
 }
 
-# create project as git repo
-function git-create() {
+# publish public repo in GitHub
+function create-public-repo() {
     hub create && git branch -M main && git push -u origin main
+}
+
+# publish private repo in Github
+function create-private-repo() {
+    hub create -p && git branch -M main && git push -u origin main
 }
 
 # send iMessages
