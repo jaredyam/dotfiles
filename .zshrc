@@ -466,7 +466,7 @@ function venv {
 # convert PDF title string to a path-compatible filename
 function title2fname {
     [ $# -ne 1 ] && echo "expected one <title> argument, but got $#" && return 1
-    echo "$1" | tr -dc '[:alnum:]-_ \n' | tr ' \n' '__' | tr '[[:upper:]]' '[[:lower:]]' |sed 's/^_*//' | sed 's/_*$//' | tee >(pbcopy)
+    echo "$1" | tr -dc '[:alnum:]-_ \n' | tr ' \n' '__' | sed 's/^_*//' | sed 's/_*$//' | tee >(pbcopy)
 }
 
 # update homebrew manually
