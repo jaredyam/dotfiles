@@ -54,24 +54,18 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-# ZSH_THEME="robbyrussell"
 ZSH_THEME="spaceship"
-
-SPACESHIP_PROMPT_ADD_NEWLINE=”true”
-SPACESHIP_CHAR_SYMBOL=(" \u203d ")
-SPACESHIP_CHAR_PREFIX=('🌈 👉')
-SPACESHIP_PROMPT_DEFAULT_PREFIX=”$USER”
-SPACESHIP_PROMPT_FIRST_PREFIX_SHOW=”true”
-SPACESHIP_USER_SHOW=”true”
-SPACESHIP_CHAR_COLOR_SUCCESS=("#ffd700")
-SPACESHIP_CHAR_COLOR_FAILURE=("#ff5f00")
-SPACESHIP_VI_MODE_SHOW="false"
+# Customize spaceship theme
+SPACESHIP_PROMPT_ADD_NEWLINE=”false”
+SPACESHIP_CHAR_SYMBOL=("$ ")
 SPACESHIP_CONDA_SYMBOL="🐍 "
 SPACESHIP_TIME_SHOW="true"
-SPACESHIP_TIME_COLOR="green"
 SPACESHIP_DIR_PREFIX="📂 "
+SPACESHIP_EXIT_CODE_SHOW="true"
+SPACESHIP_EXIT_CODE_PREFIX="["
+SPACESHIP_EXIT_CODE_SUFFIX="] "
+SPACESHIP_EXIT_CODE_SYMBOL="#"
 
-# echo "\ue0b0 \u00b1 \ue0a0 \u27a6 \u2718 \u26a1 \u2699"
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
