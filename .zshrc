@@ -201,40 +201,11 @@ function cd() {
   tree
 }
 
-# make Apple icons
-function mkicn() {
-  cd Desktop
-  ICONSET="$1.iconset"
-  mkdir "$ICONSET"
-  mv icon*.png "$ICONSET"
-  iconutil -c icns "$ICONSET"
-  rm -rf "$ICONSET"
-}
-
 # quick create a python script
 function pyscript() {
   echo "#\!/usr/bin/env python3" > $1
   chmod +x $1
   subl $1
-}
-
-# quick create a web project
-function mkweb() {
-  mkd $1
-  echo '<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>A new project</title>
-    <link href="style.css" rel="stylesheet" type="text/css" />
-  </head>
-  <body>
-    <script src="script.js"></script>
-  </body>
-</html>' > index.html
-  touch style.css
-  touch script.js
 }
 
 # fzf
@@ -275,15 +246,6 @@ function conda-remove-env() {
   conda remove -n $(conda info --env | fzf | awk '{print $1}') --all
 }
 
-# Usage: $ mk-thesis-entry lee2010.pdf lecun2014.pdf ...
-function mk-thesis-entry() {
-    for THESIS in "$@"; do
-        temp=${THESIS%.*}
-        basename=${temp##*/}
-        mkdir -p $temp && mv $THESIS $_ && touch $prefix/$basename-notes.md
-    done
-}
-
 # cheat
 function cheat() {
   command cheat $1 | bat --theme=base16 --language=bash --style=plain
@@ -315,18 +277,6 @@ function pysec() {
       result=$(figlet "$1" | boxes -d shell -a hcvc -s 70)
     fi
     echo $result | pbcopy
-}
-
-# quick create leetcode problem python script
-function leetcode() {
-    if [ -z $@ ];then
-        filename=$(pbpaste)
-    else
-        filename=$@
-    fi
-    filename=$(echo $filename | tr '[:upper:]' '[:lower:]')
-    echo $filename | tr ' ' '_'| pbcopy
-    echo $filename.py | tr ' ' '-' | xargs subl
 }
 
 # save file as gist
@@ -418,45 +368,6 @@ function pip-uninstall-dev() {
     done
 }
 
-# hugo
-function hugo-new {
-    [[ $PWD != ~/Projects/jaredyam.github.io ]] && cd ~/Projects/jaredyam.github.io
-    [ -z "$1" ] && echo "expected assign a blog name (a.k.a. *.md)" && return 1
-    [[ $# != 1 ]] && echo "warning: expected create only one blog at once, will create $1 only"
-    if [[ ${1: -3} != .md ]];then
-      filename=$1.md
-    else
-      filename=$1
-    fi
-    hugo new blogs/$filename
-    subl content/blogs/$filename
-}
-
-function hugo-preview {
-    [[ $PWD != ~/Projects/jaredyam.github.io ]] && cd ~/Projects/jaredyam.github.io
-    filename=$(find content/blogs -type f -name '*.md' -exec ls -t {} + | awk '{print $NF}' | head -1)
-    filename=${filename##*/}
-    filename=${filename%.*}
-    open http://localhost:1313/blogs/$filename && hugo server -D
-}
-
-function hugo-open-recent {
-    [[ $PWD != ~/Projects/jaredyam.github.io ]] && cd ~/Projects/jaredyam.github.io
-    filename=$(find content/blogs -type f -name '*.md' -exec ls -t {} + | fzf)
-    subl $filename
-}
-
-function hugo-delete {
-    [[ $PWD != ~/Projects/jaredyam.github.io ]] && cd ~/Projects/jaredyam.github.io
-    filename=$(find content/blogs -type f -name '*.md' -exec ls -t {} + | fzf)
-    echo "remove: $filename" && trash $filename
-}
-
-# activate a virtualenv environment
-function venv {
-    source .venv/bin/activate
-}
-
 # convert PDF title string to a path-compatible filename
 function title2fname {
     [ $# -ne 1 ] && echo "expected one <title> argument, but got $#" && return 1
@@ -468,21 +379,12 @@ alias updateall='brew update && brew upgrade && brew cleanup && gem update && ge
 
 # list path of environment variable
 alias path='echo -e ${PATH//:/\\n}'
-alias today='date +"%Y%m%d" | pbcopy'
 
-alias s='. ~/.zshrc'
-alias a='. activate'
-alias d='conda deactivate'
-alias v='nvim'
-alias f='v `fzf -i`'
 alias notebook='jupyter notebook'
 alias init-envrc='echo "export PYTHONPATH=$PWD" > .envrc && direnv allow'
 
 # vscode
 alias code='code-insiders'
-
-# typora
-alias typora='open -a typora'
 
 alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias dotfiles-lazy='lazygit --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
