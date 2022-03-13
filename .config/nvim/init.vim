@@ -103,8 +103,6 @@ call plug#end()
 set splitright splitbelow
 " turn terminal to normal mode with escape
 tnoremap <Esc> <C-\><C-n>
-" start terminal in insert mode
-autocmd BufRead,BufNewFile * start
 " open terminal on ctrl+n
 function! OpenTerminal()
   split term://bash
@@ -191,6 +189,7 @@ let g:airline_theme='material'
 let g:material_theme_style = 'darker'
 colorscheme material
 hi Normal       ctermbg=NONE guibg=NONE
+hi Visual       ctermbg=Green guibg=None
 hi SignColumn   ctermbg=235 guibg=#262626
 hi LineNr       ctermfg=grey guifg=grey ctermbg=NONE guibg=NONE
 hi CursorLineNr ctermbg=NONE guibg=NONE ctermfg=178 guifg=#d7af00
