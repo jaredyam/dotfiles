@@ -218,7 +218,7 @@ function rmf() {
 
 # conda activate environment with fzf auto-prompting available envs
 function conda-activate() {
-  conda activate $(conda info --env | fzf | awk '{print $1}')
+  conda activate $(conda env list | awk 'NF && !/^#/ {print $1}' | fzf)
 }
 alias conda-deactivate='conda deactivate'
 
@@ -243,7 +243,7 @@ function conda-create-env() {
 
 # conda remove environment with fzf auto-prompting available envs
 function conda-remove-env() {
-  conda remove -n $(conda info --env | fzf | awk '{print $1}') --all
+  conda env remove --name $(conda env list | awk 'NF && !/^#/ {print $1}' | fzf)
 }
 
 # cheat
@@ -368,10 +368,17 @@ function pip-uninstall-dev() {
     done
 }
 
-# convert PDF title string to a path-compatible filename
-function title2fname {
-    [ $# -ne 1 ] && echo "expected one <title> argument, but got $#" && return 1
-    echo "$1" | tr -dc '[:alnum:]-_ \n' | tr ' \n' '__' | sed 's/^_*//' | sed 's/_*$//' | tee >(pbcopy)
+# convert paper title to path-compatible filename
+function ptitle2fname {
+    [ $# -ne 1 ] && echo "expected only one <paper-title> argument, but got $#" && return 1
+    echo "$1" | tr -dc '[:alnum:]-_ \n' | tr ' \n' '__' | sed 's/^_*//' | sed 's/_*$//'
+}
+
+function ptitle2fname-auto {
+    ptitle="$(pbpaste)"
+    echo "[paper title]\n$ptitle"
+    fname="$(ptitle2fname "$ptitle" | tee >(pbcopy))"
+    echo "[filename]\n$fname"
 }
 
 # update homebrew manually
