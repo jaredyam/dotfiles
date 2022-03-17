@@ -4,12 +4,12 @@ export TERMINFO=/usr/share/terminfo
 # This speeds up pasting w/ autosuggest
 # https://github.com/zsh-users/zsh-autosuggestions/issues/238
 pasteinit() {
-  OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
-  zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
+    OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
+    zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
 }
 
 pastefinish() {
-  zle -N self-insert $OLD_SELF_INSERT
+    zle -N self-insert $OLD_SELF_INSERT
 }
 zstyle :bracketed-paste-magic paste-init pasteinit
 zstyle :bracketed-paste-magic paste-finish pastefinish
@@ -31,8 +31,8 @@ export HOMEBREW_NO_AUTO_UPDATE=true
 
 # java
 export JENV_ROOT="/usr/local/Cellar/jenv/"
-if which jenv > /dev/null;
-  then eval "$(jenv init -)";
+if which jenv >/dev/null; then
+    eval "$(jenv init -)"
 fi
 
 # mysql
@@ -155,16 +155,15 @@ export EDITOR="subl -w"
 
 # mkdir & cd
 function mkd() {
-  mkdir -p "$@" && cd "$1"
+    mkdir -p "$@" && cd "$1"
 }
 
 # make python package subdirectories
 function mkp() {
-  mkdir -p "$@"
-  for DIR in "$@"
-  do
-    touch "$DIR/__init__.py"
-  done
+    mkdir -p "$@"
+    for DIR in "$@"; do
+        touch "$DIR/__init__.py"
+    done
 }
 
 # colorls
@@ -172,40 +171,40 @@ source $(dirname $(gem which colorls))/tab_complete.sh
 alias ls="colorls --light --sort-dirs --report --dark"
 alias lc='colorls -lA --sd'
 function tree() {
-  if [ "$1" -eq -1 ]; then
-    colorls --tree
-  else
-    colorls --tree="${1:-1}"
-  fi
+    if [ "$1" -eq -1 ]; then
+        colorls --tree
+    else
+        colorls --tree="${1:-1}"
+    fi
 }
 
 # sublime
 function sublnp() {
-  mkdir "$1"
-  cd "$1"
-  stn
+    mkdir "$1"
+    cd "$1"
+    stn
 }
 
 # cd & tree (used for WIP Python project)
 function cd() {
-  builtin cd "$1"
-  if [ -n "$PYTHONPATH" ]; then
-    conda activate "$PYTHONPATH/.venv"
-    init_cfg_file="$PYTHONPATH/init_project_config.sh"
-    if [ -f "$init_cfg_file" ] && ! type cdr >/dev/null 2>&1; then source "$init_cfg_file"; fi
-    __conda_activated="True"
-  elif [ -n "$__conda_activated" ] && [ -z "$PYTHONPATH" ]; then
-    conda deactivate
-    unset __conda_activated
-  fi
-  tree
+    builtin cd "$1"
+    if [ -n "$PYTHONPATH" ]; then
+        conda activate "$PYTHONPATH/.venv"
+        init_cfg_file="$PYTHONPATH/init_project_config.sh"
+        if [ -f "$init_cfg_file" ] && ! type cdr >/dev/null 2>&1; then source "$init_cfg_file"; fi
+        __conda_activated="True"
+    elif [ -n "$__conda_activated" ] && [ -z "$PYTHONPATH" ]; then
+        conda deactivate
+        unset __conda_activated
+    fi
+    tree
 }
 
 # quick create a python script
 function pyscript() {
-  echo "#\!/usr/bin/env python3" > $1
-  chmod +x $1
-  subl $1
+    echo "#\!/usr/bin/env python3" >$1
+    chmod +x $1
+    subl $1
 }
 
 # fzf
@@ -218,37 +217,37 @@ function rmf() {
 
 # conda activate environment with fzf auto-prompting available envs
 function conda-activate() {
-  conda activate $(conda env list | awk 'NF && !/^#/ {print $1}' | fzf)
+    conda activate $(conda env list | awk 'NF && !/^#/ {print $1}' | fzf)
 }
 alias conda-deactivate='conda deactivate'
 
 # conda create environment with fzf auto-prompting available python versions
 function conda-create-env() {
-  local envname="$1"
-  local dirname=$(basename $PWD)
-  local response
-  [ -z "$envname" ] &&
-    read -k 1 "response?No environment name passed in, set it to the current directory name:"$'\n\t'"$dirname (y/[n])? " &&
-    echo &&
-    case "$response" in
-    y | Y | $'\n') envname="$dirname" ;;
-    n | N) read "envname?Please enter a name for the new environment: " ;;
-    *) echo "Invalid option given." && return 1 ;;
-    esac
-  conda create -n "$envname" "python=$(conda search python | fzf | awk '{print $2}')"
-  [ $(conda env list | grep "$envname" | awk '{print $1}') = "$envname" ] &&
-    conda activate "$envname" &&
-    echo "Successfully activated environment: $envname"
+    local envname="$1"
+    local dirname=$(basename $PWD)
+    local response
+    [ -z "$envname" ] &&
+        read -k 1 "response?No environment name passed in, set it to the current directory name:"$'\n\t'"$dirname (y/[n])? " &&
+        echo &&
+        case "$response" in
+        y | Y | $'\n') envname="$dirname" ;;
+        n | N) read "envname?Please enter a name for the new environment: " ;;
+        *) echo "Invalid option given." && return 1 ;;
+        esac
+    conda create -n "$envname" "python=$(conda search python | fzf | awk '{print $2}')"
+    [ $(conda env list | grep "$envname" | awk '{print $1}') = "$envname" ] &&
+        conda activate "$envname" &&
+        echo "Successfully activated environment: $envname"
 }
 
 # conda remove environment with fzf auto-prompting available envs
 function conda-remove-env() {
-  conda env remove --name $(conda env list | awk 'NF && !/^#/ {print $1}' | fzf)
+    conda env remove --name $(conda env list | awk 'NF && !/^#/ {print $1}' | fzf)
 }
 
 # cheat
 function cheat() {
-  command cheat $1 | bat --theme=base16 --language=bash --style=plain
+    command cheat $1 | bat --theme=base16 --language=bash --style=plain
 }
 
 # fzf + preview
@@ -269,12 +268,12 @@ function trash() {
 
 # generate figlet ASCII-art chars
 function pysec() {
-    if [[  $2 == -a ]]; then
-      result=$(figlet "$1" | boxes -d shell -a hcvc -p v1 -s 70 | sed '2d')
+    if [[ $2 == -a ]]; then
+        result=$(figlet "$1" | boxes -d shell -a hcvc -p v1 -s 70 | sed '2d')
     elif [[ $2 == -d ]]; then
-      result=$(figlet "$1" | boxes -d shell -a hcvc -s 70 | sed '2d')
+        result=$(figlet "$1" | boxes -d shell -a hcvc -s 70 | sed '2d')
     else
-      result=$(figlet "$1" | boxes -d shell -a hcvc -s 70)
+        result=$(figlet "$1" | boxes -d shell -a hcvc -s 70)
     fi
     echo $result | pbcopy
 }
@@ -326,7 +325,7 @@ function rename-env() {
 # install python dependencies with writing requirements.txt
 function pip-install() {
     for var in "$@"; do
-      pip install "$var" && pip freeze | grep -i "^$var==" >>"${PYTHONPATH:-.}/requirements.txt"
+        pip install "$var" && pip freeze | grep -i "^$var==" >>"${PYTHONPATH:-.}/requirements.txt"
     done
     awk -i inplace '!a[$0]++' ${PYTHONPATH:-.}/requirements.txt
 }
@@ -334,22 +333,22 @@ function pip-install() {
 # uninstall python packages with clearing the corresponding line in the requirements.txt
 function pip-uninstall() {
     for var in "$@"; do
-      pip uninstall $var
-      gsed -i "/$var==./d" ${PYTHONPATH:-.}/requirements.txt
+        pip uninstall $var
+        gsed -i "/$var==./d" ${PYTHONPATH:-.}/requirements.txt
     done
 }
 
 # write requirements needed for development
 function pip-install-dev() {
     for var in "$@"; do
-      pip install "$var" && pip freeze | grep -i "^$var==" >>"${PYTHONPATH:-.}/requirements_dev.txt"
+        pip install "$var" && pip freeze | grep -i "^$var==" >>"${PYTHONPATH:-.}/requirements_dev.txt"
     done
     awk -i inplace '!a[$0]++' ${PYTHONPATH:-.}/requirements_dev.txt
 }
 function pip-uninstall-dev() {
     for var in "$@"; do
-      pip uninstall $var
-      gsed -i "/$var==./d" ${PYTHONPATH:-.}/requirements_dev.txt
+        pip uninstall $var
+        gsed -i "/$var==./d" ${PYTHONPATH:-.}/requirements_dev.txt
     done
 }
 
@@ -394,7 +393,7 @@ fpath+=~/.zfunc
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/joeyam/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/Users/joeyam/miniconda3/bin/conda' 'shell.zsh' 'hook' 2>/dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
