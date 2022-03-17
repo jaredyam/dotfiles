@@ -296,11 +296,6 @@ function create-private-repo() {
     hub create -p && git branch -M main && git push -u origin main
 }
 
-# send iMessages
-function iMessage() {
-    osascript -e "tell application \"Messages\" to send \"${@:2}\" to buddy \"$1\""
-}
-
 # init folder as a sublime project if needed
 function subl() {
     sublime_project_file="${1##*/}.sublime-project"
@@ -320,16 +315,6 @@ function pyclear() {
     # {} puts the founded directory names in front of rm command.
     # + make it like: rm dir1 dir2 dir3 ... instead of rm dir1; rm dir2 ...
     find . -type d -name __pycache__ -exec rm -r {} +
-}
-
-# open the latest added/modified paper
-function paper() {
-    paper_dir="$HOME/Library/Mobile Documents/com~apple~CloudDocs/Papers"
-    newest_paper=$paper_dir/$(command ls -t "$paper_dir" | head -1)
-    url=$(python -c "from pathlib import Path; print(Path(\"$newest_paper\").resolve().as_uri())")
-    echo "file url has been copied to the clipboard:"
-    echo $url | tee >(pbcopy)
-    open $newest_paper
 }
 
 # change python env name
@@ -407,8 +392,6 @@ eval "$(direnv hook zsh)"
 export PATH="$HOME/.poetry/bin:$PATH"
 fpath+=~/.zfunc
 
-# anaconda
-# export PATH="/usr/local/anaconda3/bin:$PATH"  # commented out by conda initialize
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/Users/joeyam/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
@@ -423,9 +406,6 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-
-# tmux
-[[ -z $TMUX ]] || conda deactivate; conda activate
 
 # rm duplicate paths
 PATH=$(echo "$PATH" | awk -v RS=':' -v ORS=":" '!a[$1]++{if (NR > 1) printf ORS; printf $a[$1]}')
