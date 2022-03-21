@@ -14,35 +14,14 @@ pastefinish() {
 zstyle :bracketed-paste-magic paste-init pasteinit
 zstyle :bracketed-paste-magic paste-finish pastefinish
 
-# openjdk
-export CPPFLAGS="-I/usr/local/opt/openjdk/include"
-
-# openssl
-export LD_LIBRARY_PATH=$(brew --prefix openssl)/lib
-export CPATH=$(brew --prefix openssl)/include
-export PKG_CONFIG_PATH=$(brew --prefix openssl)/lib/pkgconfig
-export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
-
-# To link Rubies to Homebrew's OpenSSL 1.1 (which is upgraded) add the following
-export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
-
 # homebrew auto-update
 export HOMEBREW_NO_AUTO_UPDATE=true
-
-# java
-export JENV_ROOT="/usr/local/Cellar/jenv/"
-if which jenv >/dev/null; then
-    eval "$(jenv init -)"
-fi
 
 # mysql
 export PATH="/usr/local/mysql/bin:$PATH"
 
 # rbenv
 eval "$(rbenv init -)"
-
-# go
-export GOPATH="$HOME/go"
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -124,7 +103,7 @@ ENABLE_CORRECTION="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git sudo z jsontools history python sublime vscode xcode macos colored-man-pages colorize ruby rbenv zsh-syntax-highlighting zsh-autosuggestions gitignore git-prompt poetry conda-zsh-completion)
+plugins=(git sudo z jsontools history python sublime vscode xcode macos colored-man-pages colorize zsh-syntax-highlighting zsh-autosuggestions gitignore git-prompt poetry conda-zsh-completion)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -381,8 +360,6 @@ alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias dotfiles-lazy='lazygit --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 export PATH="/usr/local/sbin:$PATH"
-# git latex diff
-export PATH="/usr/local/Cellar/git/2.26.2_1/libexec/git-core/git-latexdiff:$PATH"
 
 # direnv
 eval "$(direnv hook zsh)"
@@ -405,9 +382,6 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-
-# rm duplicate paths
-PATH=$(echo "$PATH" | awk -v RS=':' -v ORS=":" '!a[$1]++{if (NR > 1) printf ORS; printf $a[$1]}')
 
 # hub
 eval "$(hub alias -s)"
