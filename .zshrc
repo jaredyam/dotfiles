@@ -334,11 +334,11 @@ function pip-uninstall-dev() {
 # convert paper title to path-compatible filename
 function ptitle2fname {
     [ $# -ne 1 ] && echo "expected only one <paper-title> argument, but got $#" && return 1
-    echo "$1" | tr -dc '[:alnum:]-_ \n' | tr ' \n' '__' | sed 's/^_*//' | sed 's/_*$//'
+    echo -n "$1" | tr ' \n' '__'
 }
 
 function ptitle2fname-auto {
-    ptitle="$(pbpaste)"
+    ptitle="$(pbpaste | tr '\n' ' ')"
     echo "[paper title]\n$ptitle"
     fname="$(ptitle2fname "$ptitle" | tee >(pbcopy))"
     echo "[filename]\n$fname"
