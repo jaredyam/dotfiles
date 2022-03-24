@@ -334,7 +334,7 @@ function pip-uninstall-dev() {
 # convert paper title to path-compatible filename
 function ptitle2fname {
     [ $# -ne 1 ] && echo "expected only one <paper-title> argument, but got $#" && return 1
-    echo -n "$1" | tr ' \n' '__'
+    echo -n "$1" | tr ': \n' '___'
 }
 
 function ptitle2fname-auto {
