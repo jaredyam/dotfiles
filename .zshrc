@@ -1,6 +1,9 @@
 export LC_ALL=en_US.UTF-8
 export TERMINFO=/usr/share/terminfo
 
+# ignore zsh auto-corrections on all dot files
+export CORRECT_IGNORE_FILE='.*'
+
 # This speeds up pasting w/ autosuggest
 # https://github.com/zsh-users/zsh-autosuggestions/issues/238
 pasteinit() {
