@@ -1,6 +1,6 @@
 [user]
 	name = jaredyam
-	email = jihonren@gmail.com
+	email = 50312506+jaredyam@users.noreply.github.com
 
 [color]
 	ui = true
@@ -9,7 +9,7 @@
 	helper = osxkeychain
 
 [core]
-	excludesfile = /Users/joeyam/.gitignore
+	excludesfile = ~/.gitignore
 	editor = subl -n -w
     pager = delta --dark
 
@@ -31,8 +31,6 @@
     export = !sh -c \"git archive --format zip HEAD > $1.zip\" -
     wdiff = diff --color-words --ignore-all-space
     ldiff = difftool -y -t latex
-    # [difftool.latex]
-    #     cmd = latexdiff "$LOCAL" "$REMOTE
 
     # Navigate to branches using FZF
     cof = "!checkout_fzf() { git branch | fzf | xargs git checkout; }; checkout_fzf"
@@ -63,7 +61,20 @@
 [interactive]
     diffFilter = delta --color-only --features=interactive
 
+[merge]
+    conflictstyle = diff3
+
 [diff]
     colorMoved = default
+
 [init]
 	defaultBranch = main
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[hub]
+	protocol = https
