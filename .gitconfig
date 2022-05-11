@@ -29,7 +29,7 @@
 
     # Create a .zip of your repo
     export = !sh -c \"git archive --format zip HEAD > $1.zip\" -
-    wdiff = diff --color-words --ignore-all-space
+    wdiff = diff --color-words=. --ignore-all-space
     ldiff = difftool -y -t latex
 
     # Navigate to branches using FZF
