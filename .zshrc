@@ -323,14 +323,14 @@ function pip-uninstall() {
 # write requirements needed for development
 function pip-install-dev() {
     for var in "$@"; do
-        pip install "$var" && pip freeze | grep -i "^$var==" >>"${PYTHONPATH:-.}/requirements_dev.txt"
+        pip install "$var" && pip freeze | grep -i "^$var==" >>"${PYTHONPATH:-.}/requirements-dev.txt"
     done
-    awk -i inplace '!a[$0]++' ${PYTHONPATH:-.}/requirements_dev.txt
+    awk -i inplace '!a[$0]++' ${PYTHONPATH:-.}/requirements-dev.txt
 }
 function pip-uninstall-dev() {
     for var in "$@"; do
         pip uninstall $var
-        gsed -i "/$var==./d" ${PYTHONPATH:-.}/requirements_dev.txt
+        gsed -i "/$var==./d" ${PYTHONPATH:-.}/requirements-dev.txt
     done
 }
 
