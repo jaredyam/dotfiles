@@ -306,31 +306,36 @@ function rename-env() {
 
 # install python dependencies with writing requirements.txt
 function pip-install() {
+    local requirements="${PYTHONPATH:-.}/requirements.txt"
     for var in "$@"; do
-        pip install "$var" && pip freeze | grep -i "^$var==" >>"${PYTHONPATH:-.}/requirements.txt"
+        pip install "$var" && pip freeze | grep -i "^$var==" >>"$requirements"
     done
-    awk -i inplace '!a[$0]++' ${PYTHONPATH:-.}/requirements.txt
+    awk -i inplace '!a[$0]++' "$requirements"
 }
 
 # uninstall python packages with clearing the corresponding line in the requirements.txt
 function pip-uninstall() {
+    local requirements="${PYTHONPATH:-.}/requirements.txt"
     for var in "$@"; do
         pip uninstall $var
-        gsed -i "/$var==./d" ${PYTHONPATH:-.}/requirements.txt
+        gsed -i "/$var==./d" "$requirements"
     done
 }
 
 # write requirements needed for development
 function pip-install-dev() {
+    local requirements="${PYTHONPATH:-.}/requirements-dev.txt"
+    [ -f "$requirements" ] || echo "-e .\n" > "$requirements"
     for var in "$@"; do
-        pip install "$var" && pip freeze | grep -i "^$var==" >>"${PYTHONPATH:-.}/requirements-dev.txt"
+        pip install "$var" && pip freeze | grep -i "^$var==" >>"$requirements"
     done
-    awk -i inplace '!a[$0]++' ${PYTHONPATH:-.}/requirements-dev.txt
+    awk -i inplace '!a[$0]++' "$requirements"
 }
 function pip-uninstall-dev() {
+    local requirements="${PYTHONPATH:-.}/requirements-dev.txt"
     for var in "$@"; do
         pip uninstall $var
-        gsed -i "/$var==./d" ${PYTHONPATH:-.}/requirements-dev.txt
+        gsed -i "/$var==./d" "$requirements"
     done
 }
 
