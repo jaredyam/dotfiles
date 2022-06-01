@@ -368,7 +368,7 @@ export PATH="/usr/local/sbin:$PATH"
 eval "$(direnv hook zsh)"
 
 # poetry config
-export PATH="$HOME/.poetry/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 fpath+=~/.zfunc
 
 # >>> conda initialize >>>
